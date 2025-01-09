@@ -27,7 +27,9 @@ class TwitterPlugin {
   constructor(options: ITwitterPluginOptions) {
     this.id = options.id || "twitter_worker";
     this.name = options.name || "Twitter Worker";
-    this.description = options.description || "A worker that can post tweets";
+    this.description =
+      options.description ||
+      "A worker that will execute tasks within the Twitter Social Platforms. It is capable of posting, reply, quote and like tweets.";
 
     this.twitterClient = new TwitterApi({
       appKey: options.credentials.apiKey,
