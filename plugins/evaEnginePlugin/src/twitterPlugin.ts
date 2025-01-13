@@ -6,7 +6,7 @@ import {
 } from "@virtuals-protocol/game";
 import TwitterApi from "twitter-api-v2";
 import { getTweet } from "./tweet/get-tweet";
-import { evaClient } from "./evaEngine";
+import { EvaClient } from "@superoo7/eva-sdk";
 
 interface ITwitterPluginOptions {
   id?: string;
@@ -19,6 +19,7 @@ interface ITwitterPluginOptions {
     accessTokenSecret: string;
   };
   thresholdScore?: number;
+  evaClient: EvaClient;
 }
 
 class TwitterPlugin {
@@ -27,6 +28,7 @@ class TwitterPlugin {
   private description: string;
   private twitterClient: TwitterApi;
   private thresholdScore: number;
+  private evaClient: EvaClient;
 
   constructor(options: ITwitterPluginOptions) {
     this.id = options.id || "twitter_worker";
@@ -43,6 +45,7 @@ class TwitterPlugin {
     });
     const thresholdScore = options.thresholdScore || 0;
     this.thresholdScore = Math.min(Math.max(thresholdScore, 0), 1);
+    this.evaClient = options.evaClient;
   }
 
   public getWorker(data?: {
@@ -154,16 +157,20 @@ class TwitterPlugin {
             );
           }
           const inputTweet = tweet.text;
-          const txHash = await evaClient.signEvaluateTweetRequest(inputTweet, args.reply);
-          const result = await evaClient.submitEvaluateTweetRequest(txHash);
+          const txHash = await this.evaClient.signEvaluateTweetRequest(
+            inputTweet,
+            args.reply
+          );
+          const { result } = await this.evaClient.submitEvaluateTweetRequest(
+            txHash
+          );
 
-          // TODO: run threshold check, if not met dont reply
-          // if (result.score < this.thresholdScore) {
-          //   return new ExecutableGameFunctionResponse(
-          //     ExecutableGameFunctionStatus.Failed,
-          //     "Reply score is too low"
-          //   );
-          // }
+          if (result.final_score < this.thresholdScore) {
+            return new ExecutableGameFunctionResponse(
+              ExecutableGameFunctionStatus.Failed,
+              "Reply score is too low"
+            );
+          }
 
           await this.twitterClient.v2.reply(args.tweet_id, args.reply);
 
