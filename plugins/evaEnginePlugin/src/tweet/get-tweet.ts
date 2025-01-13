@@ -1,3 +1,5 @@
+// Modified code of https://github.com/vercel/react-tweet
+
 import { AxiosRequestConfig } from "axios";
 import { fetchTweet } from "./fetch-tweet";
 import type { Tweet } from "./tweet";
