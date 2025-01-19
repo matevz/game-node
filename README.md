@@ -15,10 +15,10 @@ The SDK is made up of 3 main components (Agent, Worker, function), each with con
 
 Agent (a.k.a. [high level planner](https://whitepaper.virtuals.io/developer-documents/game-framework/game-overview#high-level-planner-hlp-context))
 - Takes in a <b>Goal</b>
-  - Drives the agents behaviour through the high level plan which influences the thinking and creation of tasks that would contribute towards this goal
+  - Drives the agent's behavior through the high-level plan which influences the thinking and creation of tasks that would contribute towards this goal
 - Takes in a <b>Description</b>
   - Combination of what was previously known as World Info + Agent Description
-  - This include a description of the "world" the agent lives in, and the personality and background of the agent
+  - This includes a description of the "world" the agent lives in, and the personality and background of the agent
 
 Worker (a.k.a. [low-level planner](https://whitepaper.virtuals.io/developer-documents/game-framework/game-overview#low-level-planner-llp-context)) 
 - Takes in a <b>Description</b>
@@ -136,7 +136,7 @@ To run a worker individually, you can initialize and run the worker without the 
 const agentWorker = agent.getWorkerById(worker1.id);
 
 const task =
-  "Gotten a message from user. Message content: hey! i will need help with my project, i need an image of a cat hugging AI. Can you help me with that? Give me something that cool and cute!";
+  "Gotten a message from user. Message content: hey! I will need help with my project, I need an image of a cat-hugging AI. Can you help me with that? Give me something that cool and cute!";
 
 await agentWorker.runTask(task);
 ```
@@ -393,7 +393,7 @@ await agent.init();
 const agentTgWorker = agent.getWorkerById(telegramWorker.id);
 
 const task =
-  "Gotten a message from user. Message content: hey! i will need help with my project, i need an image of a cat hugging AI. Can you help me with that? Give me something that cool and cute!";
+  "Gotten a message from user. Message content: hey! I will need help with my project, I need an image of a cat-hugging AI. Can you help me with that? Give me something that cool and cute!";
 
 await agentTgWorker.runTask(task, {
   /**
