@@ -7,15 +7,15 @@ import {
 } from "@virtuals-protocol/game";
 
 export const DEFAULT_API_KEY = "UP-17f415babba7482cb4b446a1";
-export const DEFAULT_BASE_API_URL = "https://api.allora.network";
+export const DEFAULT_BASE_API_URL = "https://api.allora.network/v2";
 
 interface IAlloraPluginOptions {
   id?: string;
   name?: string;
   description?: string;
   apiClientConfig: {
-    chainSlug: ChainSlug;
-    apiKey: string;
+    chainSlug?: ChainSlug;
+    apiKey?: string;
     baseApiUrl?: string;
   };
 }
@@ -31,7 +31,7 @@ class AlloraPlugin {
     this.name = options.name || "Allora Worker";
     this.description =
       options.description ||
-      "A worker that interacts with the Allora Network for retrieving price predictions and inferences from the active topics on the network.";
+      "Worker that interacts with the Allora Network for retrieving price predictions and inferences from the active topics on the network.";
 
     this.alloraApiClient = new AlloraAPIClient({
       chainSlug: options.apiClientConfig.chainSlug ?? ChainSlug.TESTNET,
@@ -129,29 +129,49 @@ class AlloraPlugin {
         { name: "asset", description: "The crypto asset symbol to get the price prediction for. Example: BTC, ETH, SOL, SHIB, etc." },
         {
           name: "timeframe",
-          description: "The timeframe to get the price prediction for. Example: 5m, 8h, 24h, etc.",
+          description: "The timeframe to get the price prediction for. Example: 5m, 8h etc.",
         },
       ] as const,
       executable: async (args, logger) => {
         try {
-          if (!args.asset) {
+          const asset = args.asset?.toUpperCase();
+          const timeframe = args.timeframe?.toLowerCase();
+
+          if (!asset) {
             return new ExecutableGameFunctionResponse(
               ExecutableGameFunctionStatus.Failed,
               "Asset is required"
             );
           }
-
-          if (!args.timeframe) {
+          
+          const supportedTokens = Object.values(PricePredictionToken);
+          if (!supportedTokens.includes(asset as PricePredictionToken)) {
+            return new ExecutableGameFunctionResponse(
+              ExecutableGameFunctionStatus.Failed,
+              `Asset ${args.asset} is not supported. Supported assets are: ${supportedTokens.join(", ")}`
+            );
+          }
+          
+          if (!timeframe) {
             return new ExecutableGameFunctionResponse(
               ExecutableGameFunctionStatus.Failed,
               "Timeframe is required"
             );
           }
 
-          logger(`Fetching price prediction for ${args.asset} on Allora Network for ${args.timeframe} timeframe`);
+          const supportedTimeframes = Object.values(PricePredictionTimeframe);
+          if (!supportedTimeframes.includes(args.timeframe as PricePredictionTimeframe)) {
+            return new ExecutableGameFunctionResponse(
+              ExecutableGameFunctionStatus.Failed,
+              `Timeframe ${args.timeframe} is not supported. Supported timeframes are: ${supportedTimeframes.join(", ")}`
+            );
+          }
 
-          const inference = await this.alloraApiClient.getPricePrediction(args.asset as PricePredictionToken, args.timeframe as PricePredictionTimeframe);
-          const message = `The price prediction for ${args.asset} in ${args.timeframe} is: ${inference.inference_data.network_inference_normalized}`;
+          logger(`Fetching price prediction for ${asset} on Allora Network for ${timeframe} timeframe`);
+          
+          const inference = await this.alloraApiClient.getPricePrediction(asset as PricePredictionToken, timeframe as PricePredictionTimeframe);
+
+          const message = `The price prediction for ${asset} in ${timeframe} is: ${inference.inference_data.network_inference_normalized}`;
 
           logger(message);
 

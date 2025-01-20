@@ -1,35 +1,31 @@
-import { ChainSlug } from "@alloralabs/allora-sdk";
+import { ChainSlug, PricePredictionTimeframe, PricePredictionToken } from "@alloralabs/allora-sdk";
 import { GameAgent } from "@virtuals-protocol/game";
 import AlloraPlugin from ".";
 
 
 const alloraPlugin = new AlloraPlugin({
   apiClientConfig: {
-    chainSlug: ChainSlug.TESTNET,
-    apiKey: "UP-17f415babba7482cb4b446a1",
+    chainSlug: process.env.ALLORA_CHAIN_SLUG as ChainSlug,
+    apiKey: process.env.ALLORA_API_KEY, // Default key: UP-17f415babba7482cb4b446a1
   },
 });
 
 // Create an agent with the worker
-const agent = new GameAgent("API_KEY", {
+const agent = new GameAgent(process.env.GAME_API_KEY ?? "", {
   name: "Allora Worker",
-  goal: "get price predictions and inferences from the Allora Network",
-  description: "A worker that interacts with the Allora Network for retrieving price predictions and inferences from the active topics on the network.",
+  goal: "Get the 5m price inference for BTC and Luna from Allora Network.",
+  description: `You are an AI agent specialized in Allora Network.
+You are able to get price predictions from Allora Network and provide users insights into future price of different crypto assets.
+You are able to get details about the topics deployed on Allora Network and provide users insights into the topics.
+For all the active topics, you are able to get the latest inference using the topic id.
+The available assets for price predictions worker are ${Object.values(PricePredictionToken).join(", ")};
+for the following timeframes: ${Object.values(PricePredictionTimeframe).join(", ")}.
+If a price prediction is not available for a specific asset and timeframe,
+you should determine the topic id for the asset and timeframe and use the topics inferences worker to get the latest inference 
+for the specified asset and timeframe. This will return the equivalent of a price prediction for the asset and timeframe.
+  `,
   workers: [
-    alloraPlugin.getWorker({
-      // Define the functions that the worker can perform, by default it will use the all functions defined in the plugin
-      // functions: [
-      //   twitterPlugin.searchTweetsFunction,
-      //   twitterPlugin.replyTweetFunction,
-      //   twitterPlugin.postTweetFunction,
-      // ],
-      // Define the environment variables that the worker can access, by default it will use the metrics defined in the plugin
-      // getEnvironment: async () => ({
-      //   ...(await twitterPlugin.getMetrics()),
-      //   username: "virtualsprotocol",
-      //   token_price: "$100.00",
-      // }),
-    }),
+    alloraPlugin.getWorker({}),
   ],
 });
 
