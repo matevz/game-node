@@ -38,11 +38,54 @@ class RSS3Plugin {
       name: this.name,
       description: this.description,
       functions: data?.functions || [
-        this.getActivitiesFunction,
+        this.getCryptoNewsFunction,
+        this.getActivitiesFunction
       ]
     });
   }
 
+
+  get getCryptoNewsFunction() {
+    interface AIIntel {
+      agent_insight: string;
+      knowledge_corpus: string;
+      intel_digest: string;
+    }
+
+    return new GameFunction({
+      name: "get_crypto_news",
+      description: "Get the latest crypto news structured for AI Agents from RSS3 Network",
+      args: [{ name: "limit", description: "Limit the number of activities to retrieve" }] as const,
+      executable: async (args, logger) => {
+        try {
+
+          logger('Retrieving the latest crypto news');
+
+          let rss3AIEndpoint = 'https://ai.rss3.io/api/v1/ai_intel';
+
+          if (args.limit) {
+            rss3AIEndpoint += `?limit=${args.limit}`;
+          }
+
+          const intel: AIIntel[] = await (await fetch(rss3AIEndpoint)).json();
+
+          const cryptoNews = `crypto news fetched:\n${JSON.stringify(intel, null, 2)}`;
+
+          logger(cryptoNews);
+
+          return new ExecutableGameFunctionResponse(
+            ExecutableGameFunctionStatus.Done,
+            cryptoNews
+          );
+        } catch (e) {
+          return new ExecutableGameFunctionResponse(
+            ExecutableGameFunctionStatus.Failed,
+            "Failed to retrieve the latest crypto news, please try again."
+          );
+        }
+      },
+    });
+  }
 
   get getActivitiesFunction() {
     return new GameFunction({

@@ -71,8 +71,9 @@ Initialize and run the agent:
 
 ## Available Functions
 
-The `RSS3Plugin` provides 1 function that can be used by the agent:
+The `RSS3Plugin` provides 2 functions that can be used by the agent:
 
+- `getCryptoNewsFunction`: Retrieve the latest crypto news structured for AI agents to be used as a source of information for analysis and decision-making.
 - `getActivitiesFunction`: Retrieve activities of anyone based on a query.
 
 ## License
