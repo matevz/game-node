@@ -65,7 +65,7 @@ import { GameAgent } from "@virtuals-protocol/game";
 
 const agent = new GameAgent("GAME_API_KEY", {
   name: "Allora Worker",
-  goal: "Retrieves all available topics on Allora Network.",
+  goal: "Retrieve the price of ETH in 5 minutes.",
   description: "You are an AI agent able to fetch price predictions and topic inferences from Allora Network.",
   workers: [alloraPlugin.getWorker({})],
 });
