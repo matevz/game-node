@@ -1,8 +1,8 @@
-import GameClient, { ActionType } from "./api";
 import {
   ExecutableGameFunctionResponseJSON,
   GameFunctionBase,
 } from "./function";
+import { ActionType, IGameClient } from "./interface/GameClient";
 
 interface IGameWorker {
   id: string;
@@ -21,7 +21,7 @@ class GameWorker implements IGameWorker {
 
   private agentId: string | null = null;
   private logger: ((msg: string) => void) | null = null;
-  private gameClient: GameClient | null = null;
+  private gameClient: IGameClient | null = null;
 
   private gameActionResult: ExecutableGameFunctionResponseJSON | null = null;
 
@@ -41,7 +41,7 @@ class GameWorker implements IGameWorker {
     this.logger = logger;
   }
 
-  setGameClient(gameClient: GameClient) {
+  setGameClient(gameClient: IGameClient) {
     this.gameClient = gameClient;
   }
 
