@@ -1,4 +1,4 @@
-import { AlloraAPIClient, ChainSlug, PricePredictionTimeframe, PricePredictionToken } from "@alloralabs/allora-sdk";
+import { AlloraAPIClient, ChainSlug, PriceInferenceTimeframe, PriceInferenceToken } from "@alloralabs/allora-sdk";
 import {
   GameWorker,
   GameFunction,
@@ -31,7 +31,7 @@ class AlloraPlugin {
     this.name = options.name || "Allora Worker";
     this.description =
       options.description ||
-      "Worker that interacts with the Allora Network for retrieving price predictions and inferences from the active topics on the network.";
+      "Worker that interacts with the Allora Network for retrieving price inferences and inferences from the active topics on the network.";
 
     this.alloraApiClient = new AlloraAPIClient({
       chainSlug: options.apiClientConfig.chainSlug ?? ChainSlug.TESTNET,
@@ -51,7 +51,7 @@ class AlloraPlugin {
       functions: data?.functions || [
         this.getAllTopics,
         this.getInferenceByTopicId,
-        this.getPricePrediction,
+        this.getPriceInference,
       ],
       getEnvironment: data?.getEnvironment,
     });
@@ -121,15 +121,15 @@ class AlloraPlugin {
     });
   }
 
-  get getPricePrediction() {
+  get getPriceInference() {
     return new GameFunction({
-      name: "get_price_prediction",
-      description: "Fetches from Allora Network the future price prediction for a given crypto asset and timeframe.",
+      name: "get_price_inference",
+      description: "Fetches from Allora Network the future price inference for a given crypto asset and timeframe.",
       args: [
-        { name: "asset", description: "The crypto asset symbol to get the price prediction for. Example: BTC, ETH, SOL, SHIB, etc." },
+        { name: "asset", description: "The crypto asset symbol to get the price inference for. Example: BTC, ETH, SOL, SHIB, etc." },
         {
           name: "timeframe",
-          description: "The timeframe to get the price prediction for. Example: 5m, 8h etc.",
+          description: "The timeframe to get the price inference for. Example: 5m, 8h etc.",
         },
       ] as const,
       executable: async (args, logger) => {
@@ -144,8 +144,8 @@ class AlloraPlugin {
             );
           }
           
-          const supportedTokens = Object.values(PricePredictionToken);
-          if (!supportedTokens.includes(asset as PricePredictionToken)) {
+          const supportedTokens = Object.values(PriceInferenceToken);
+          if (!supportedTokens.includes(asset as PriceInferenceToken)) {
             return new ExecutableGameFunctionResponse(
               ExecutableGameFunctionStatus.Failed,
               `Asset ${args.asset} is not supported. Supported assets are: ${supportedTokens.join(", ")}`
@@ -159,19 +159,19 @@ class AlloraPlugin {
             );
           }
 
-          const supportedTimeframes = Object.values(PricePredictionTimeframe);
-          if (!supportedTimeframes.includes(args.timeframe as PricePredictionTimeframe)) {
+          const supportedTimeframes = Object.values(PriceInferenceTimeframe);
+          if (!supportedTimeframes.includes(args.timeframe as PriceInferenceTimeframe)) {
             return new ExecutableGameFunctionResponse(
               ExecutableGameFunctionStatus.Failed,
               `Timeframe ${args.timeframe} is not supported. Supported timeframes are: ${supportedTimeframes.join(", ")}`
             );
           }
 
-          logger(`Fetching price prediction for ${asset} on Allora Network for ${timeframe} timeframe`);
+          logger(`Fetching price inference for ${asset} on Allora Network for ${timeframe} timeframe`);
           
-          const inference = await this.alloraApiClient.getPricePrediction(asset as PricePredictionToken, timeframe as PricePredictionTimeframe);
+          const inference = await this.alloraApiClient.getPriceInference(asset as PriceInferenceToken, timeframe as PriceInferenceTimeframe);
 
-          const message = `The price prediction for ${asset} in ${timeframe} is: ${inference.inference_data.network_inference_normalized}`;
+          const message = `The price inference for ${asset} in ${timeframe} is: ${inference.inference_data.network_inference_normalized}`;
 
           logger(message);
 
@@ -182,7 +182,7 @@ class AlloraPlugin {
         } catch (e: any) {
           return new ExecutableGameFunctionResponse(
             ExecutableGameFunctionStatus.Failed,
-            `An error occurred while fetching ${args.asset} ${args.timeframe} price prediction from Allora Network: ${e.message || "Unknown error"}`
+            `An error occurred while fetching ${args.asset} ${args.timeframe} price inference from Allora Network: ${e.message || "Unknown error"}`
           );
         }
       },
