@@ -1,5 +1,7 @@
-import GameClient, { ActionType } from "./api";
+import GameClient from "./api";
+import GameClientV2 from "./apiV2";
 import { ExecutableGameFunctionResponseJSON } from "./function";
+import { ActionType, IGameClient } from "./interface/GameClient";
 import GameWorker from "./worker";
 
 interface IGameAgent {
@@ -18,7 +20,7 @@ class GameAgent implements IGameAgent {
   public getAgentState?: () => Promise<Record<string, any>>;
 
   private workerId: string;
-  private gameClient: GameClient;
+  private gameClient: IGameClient;
 
   private agentId: string | null = null;
   private mapId: string | null = null;
@@ -29,7 +31,9 @@ class GameAgent implements IGameAgent {
   }
 
   constructor(apiKey: string, options: IGameAgent) {
-    this.gameClient = new GameClient(apiKey);
+    this.gameClient = apiKey.startsWith("apt-")
+      ? new GameClientV2(apiKey)
+      : new GameClient(apiKey);
     this.workerId = options.workers[0].id;
 
     this.name = options.name;

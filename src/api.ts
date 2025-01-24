@@ -1,44 +1,14 @@
 import axios, { Axios } from "axios";
 import GameWorker from "./worker";
 import { ExecutableGameFunctionResponseJSON } from "./function";
+import {
+  GameAction,
+  GameAgent,
+  IGameClient,
+  Map,
+} from "./interface/GameClient";
 
-export interface Map {
-  id: string;
-}
-
-export interface GameAgent {
-  id: string;
-  name: string;
-  goal: string;
-  description: string;
-}
-
-export enum ActionType {
-  CallFunction = "call_function",
-  ContinueFunction = "continue_function",
-  Wait = "wait",
-  TryToTalk = "try_to_talk",
-  Conversation = "conversation",
-  GoTo = "go_to",
-  Unknown = "unknown",
-}
-
-export interface ActionArgs {
-  location_id: string;
-  task_id: string;
-  fn_id: string;
-  args: Record<string, any>;
-  fn_name: string;
-  thought: string;
-}
-
-export interface GameAction {
-  action_type: ActionType;
-  action_args: ActionArgs;
-  agent_state?: Record<string, any>;
-}
-
-class GameClient {
+class GameClient implements IGameClient {
   public client: Axios | null = null;
   private runnerUrl = "https://game.virtuals.io";
 
