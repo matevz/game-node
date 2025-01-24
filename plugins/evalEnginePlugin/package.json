@@ -1,5 +1,5 @@
 {
-  "name": "@virtuals-protocol/game-evalengine-twitter-plugin",
+  "name": "@virtuals-protocol/game-eval-engine-plugin",
   "version": "0.1.1",
   "description": "",
   "main": "./dist/index.js",

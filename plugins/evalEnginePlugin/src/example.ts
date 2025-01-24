@@ -3,7 +3,7 @@ import { GameAgent } from "@virtuals-protocol/game";
 import dotenv from "dotenv";
 dotenv.config();
 
-// import TwitterPlugin from "@virtuals-protocol/game-evalengine-twitter-plugin";
+// import TwitterEvalEnginePlugin from "@virtuals-protocol/game-evalengine-twitter-plugin";
 import TwitterEvalEnginePlugin from "./index";
 import { initEvalClient } from "./evalEngine";
 
@@ -44,7 +44,7 @@ if (
       accessToken: X_ACCESS_TOKEN,
       accessTokenSecret: X_ACCESS_TOKEN_SECRET,
     },
-    thresholdScore: 0.5,
+    thresholdScore: 50,
     evalClient,
   });
 

@@ -1,19 +1,23 @@
-# Twitter Plugin for Virtuals Game
+# Eval Engine Twitter Plugin for Virtuals Game
 
-This plugin allows you to integrate Twitter functionalities into your Virtuals Game. With this plugin, you can post tweets, reply to tweets, like tweets, and more.
+This plugin allows you to integrate Twitter functionalities into your Virtuals Game with [Eval Engine](https://evalengine.ai). With this plugin, you can post tweets, reply to tweets, like tweets, and more.
+
+> This plugin is built on top of twitterPlugin. It logs the performance of your AI Agent and prevents spammy replies
 
 ## Installation
+
+Setup Chromia Private Key: [Guide](https://github.com/evalengine/eval-docs/blob/main/setup-chromia-account.md)
 
 To install the plugin, use npm or yarn:
 
 ```bash
-npm install @virtuals-protocol/game-twitter-plugin
+npm install @virtuals-protocol/game-eval-engine-plugin
 ```
 
 or
 
 ```bash
-yarn add @virtuals-protocol/game-twitter-plugin
+yarn add @virtuals-protocol/game-eval-engine-plugin
 ```
 
 ## Usage
@@ -23,7 +27,7 @@ yarn add @virtuals-protocol/game-twitter-plugin
 First, import the `TwitterPlugin` class from the plugin:
 
 ```typescript
-import TwitterPlugin from "@virtuals-protocol/game-twitter-plugin";
+import TwitterEvalEnginePlugin from "@virtuals-protocol/game-eval-engine-plugin";
 ```
 
 ### Creating a Worker
@@ -31,14 +35,19 @@ import TwitterPlugin from "@virtuals-protocol/game-twitter-plugin";
 Create a worker with the necessary Twitter credentials:
 
 ```typescript
-const twitterPlugin = new TwitterPlugin({
-  credentials: {
-    apiKey: "your_api_key",
-    apiSecretKey: "your_api_secret_key",
-    accessToken: "your_access_token",
-    accessTokenSecret: "your_access_token_secret",
-  },
-});
+  const evalClient = await initEvalClient(PRIVATE_KEY);
+
+  const twitterPlugin = new TwitterEvalEnginePlugin({
+    credentials: {
+      apiKey: X_API_KEY,
+      apiSecretKey: X_API_KEY_SECRET,
+      accessToken: X_ACCESS_TOKEN,
+      accessTokenSecret: X_ACCESS_TOKEN_SECRET,
+    },
+    thresholdScore: 0.5,
+    evalClient,
+  });
+
 ```
 
 ### Creating an Agent

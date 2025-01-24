@@ -44,7 +44,7 @@ class TwitterEvalEnginePlugin {
       accessSecret: options.credentials.accessTokenSecret,
     });
     const thresholdScore = options.thresholdScore || 0;
-    this.thresholdScore = Math.min(Math.max(thresholdScore, 0), 1);
+    this.thresholdScore = Math.min(Math.max(thresholdScore, 0), 100);
     this.evalClient = options.evalClient;
   }
 
@@ -165,16 +165,13 @@ class TwitterEvalEnginePlugin {
             txHash
           );
 
+          logger(JSON.stringify(result))
           if (result.final_score < this.thresholdScore) {
             return new ExecutableGameFunctionResponse(
               ExecutableGameFunctionStatus.Failed,
               "Reply score is too low"
             );
           }
-
-          console.log("+++++++++++++++++++++++++++++++++++++");
-          console.log(result);
-          console.log("+++++++++++++++++++++++++++++++++++++");
           logger(`Replying [${args.tweet_id}]: ${args.reply}`);
           await this.twitterClient.v2.reply(args.tweet_id, args.reply);
 
