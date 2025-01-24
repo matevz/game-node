@@ -3,9 +3,9 @@ import { GameAgent } from "@virtuals-protocol/game";
 import dotenv from "dotenv";
 dotenv.config();
 
-// import TwitterPlugin from "@virtuals-protocol/game-evaengine-twitter-plugin";
+// import TwitterPlugin from "@virtuals-protocol/game-evalengine-twitter-plugin";
 import TwitterPlugin from "./index";
-import { initEvaClient } from "./evaEngine";
+import { initEvalClient } from "./evalEngine";
 
 const {
   X_API_KEY,
@@ -30,11 +30,11 @@ if (
 }
 
 (async () => {
-  // Uncomment and validate PRIVATE_KEY if initEvaClient is needed
+  // Uncomment and validate PRIVATE_KEY if initEvalClient is needed
   if (!PRIVATE_KEY) {
     throw new Error("Missing PRIVATE_KEY environment variable");
   }
-  const evaClient = await initEvaClient(PRIVATE_KEY);
+  const evalClient = await initEvalClient(PRIVATE_KEY);
 
   // Create a worker with the functions
   const twitterPlugin = new TwitterPlugin({
@@ -45,7 +45,7 @@ if (
       accessTokenSecret: X_ACCESS_TOKEN_SECRET,
     },
     thresholdScore: 0.5,
-    evaClient,
+    evalClient,
   });
 
   // Create an agent with the worker

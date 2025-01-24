@@ -6,7 +6,7 @@ import {
 } from "@virtuals-protocol/game";
 import TwitterApi from "twitter-api-v2";
 import { getTweet } from "./tweet/get-tweet";
-import { EvaClient } from "@superoo7/eva-sdk";
+import { EvaClient as EvalClient } from "@superoo7/eva-sdk";
 
 interface ITwitterPluginOptions {
   id?: string;
@@ -19,7 +19,7 @@ interface ITwitterPluginOptions {
     accessTokenSecret: string;
   };
   thresholdScore?: number;
-  evaClient: EvaClient;
+  evalClient: EvalClient;
 }
 
 class TwitterPlugin {
@@ -28,7 +28,7 @@ class TwitterPlugin {
   private description: string;
   private twitterClient: TwitterApi;
   private thresholdScore: number;
-  private evaClient: EvaClient;
+  private evalClient: EvalClient;
 
   constructor(options: ITwitterPluginOptions) {
     this.id = options.id || "twitter_worker";
@@ -45,7 +45,7 @@ class TwitterPlugin {
     });
     const thresholdScore = options.thresholdScore || 0;
     this.thresholdScore = Math.min(Math.max(thresholdScore, 0), 1);
-    this.evaClient = options.evaClient;
+    this.evalClient = options.evalClient;
   }
 
   public getWorker(data?: {
@@ -157,11 +157,11 @@ class TwitterPlugin {
             );
           }
           const inputTweet = tweet.text;
-          const txHash = await this.evaClient.signEvaluateTweetRequest(
+          const txHash = await this.evalClient.signEvaluateTweetRequest(
             inputTweet,
             args.reply
           );
-          const { result } = await this.evaClient.submitEvaluateTweetRequest(
+          const { result } = await this.evalClient.submitEvaluateTweetRequest(
             txHash
           );
 
