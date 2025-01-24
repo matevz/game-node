@@ -6,7 +6,7 @@ import {
 } from "@virtuals-protocol/game";
 import TwitterApi from "twitter-api-v2";
 import { getTweet } from "./tweet/get-tweet";
-import { EvaClient as EvalClient } from "@superoo7/eva-sdk";
+import { EvalClient } from "eval-engine-sdk";
 
 interface ITwitterPluginOptions {
   id?: string;
@@ -22,7 +22,7 @@ interface ITwitterPluginOptions {
   evalClient: EvalClient;
 }
 
-class TwitterPlugin {
+class TwitterEvalEnginePlugin {
   private id: string;
   private name: string;
   private description: string;
@@ -161,7 +161,7 @@ class TwitterPlugin {
             inputTweet,
             args.reply
           );
-          const { result } = await this.evalClient.submitEvaluateTweetRequest(
+          const result = await this.evalClient.submitEvaluateTweetRequest(
             txHash
           );
 
@@ -172,6 +172,10 @@ class TwitterPlugin {
             );
           }
 
+          console.log("+++++++++++++++++++++++++++++++++++++");
+          console.log(result);
+          console.log("+++++++++++++++++++++++++++++++++++++");
+          logger(`Replying [${args.tweet_id}]: ${args.reply}`);
           await this.twitterClient.v2.reply(args.tweet_id, args.reply);
 
           return new ExecutableGameFunctionResponse(
@@ -297,4 +301,4 @@ class TwitterPlugin {
   }
 }
 
-export default TwitterPlugin;
+export default TwitterEvalEnginePlugin;
