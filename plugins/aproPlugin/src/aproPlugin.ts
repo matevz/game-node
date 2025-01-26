@@ -33,6 +33,18 @@ function cleanNumber(numStr: string) {
   return parseFloat(numStr).toString();
 }
 
+function parseArray(array?: any) {
+  if (!array) {
+    return [];
+  }
+
+  if (Array.isArray(array)) {
+    return array;
+  }
+
+  return JSON.parse(array.replace(/'/g, '"').trim());
+} 
+
 class AproPlugin {
   private id: string;
   private name: string;
@@ -79,7 +91,7 @@ class AproPlugin {
       args: [
         {
           name: "signers",
-          type: "array",
+          type: "string[]",
           description: "The signers of the agent.",
         },
         {
@@ -119,22 +131,26 @@ class AproPlugin {
         }
       ] as const,
       executable: async (args, logger) => {
+        logger("Creating and registering agent with args: \n" + JSON.stringify(args));
+
         const agentHeader = {
           sourceAgentName: args.agentHeaderSourceAgentName,
           targetAgentId: args.agentHeaderTargetAgentId,
-          messageType: args.agentHeaderMessageType,
-          priority: args.agentHeaderPriority,
-          ttl: args.agentHeaderTtl,
+          messageType: Number(args.agentHeaderMessageType),
+          priority: Number(args.agentHeaderPriority),
+          ttl: Number(args.agentHeaderTtl),
         }
-        const registerParams = {
-          signers: args.signers,
-          threshold: args.threshold,
+        const agentSettings = {
+          signers: parseArray(args.signers),
+          threshold: Number(args.threshold),
           converterAddress: args.converterAddress,
           agentHeader,
         }
 
         try {
-          const tx = await this.agentSDK.createAndRegisterAgent(registerParams as any);
+          logger("Creating and registering agent with settings: " + JSON.stringify(agentSettings));
+
+          const tx = await this.agentSDK.createAndRegisterAgent({ agentSettings: agentSettings as any });
           logger("Created and registered agent with tx hash: " + tx.hash);
 
           const receipt = await tx.wait()
@@ -189,6 +205,16 @@ class AproPlugin {
        */
       args: [
         {
+          name: "agent",
+          type: "string",
+          description: "The agent address.",
+        },
+        {
+          name: "configDigest",
+          type: "string",
+          description: "The config digest.",
+        },
+        {
           name: "data",
           type: "string",
           description: "The data to verify.",
@@ -200,7 +226,7 @@ class AproPlugin {
         },
         {
           name: "signatures",
-          type: "array",
+          type: "{ r: string, s: string, v: number }[]",
           description: "The signatures of the data.",
         },
         {
@@ -220,10 +246,42 @@ class AproPlugin {
         },
       ] as const,
       executable: async (args, logger) => {
-        return new ExecutableGameFunctionResponse(
-          ExecutableGameFunctionStatus.Done,
-          ""
-        );
+        logger("Verifying data with args: \n" + JSON.stringify(args));
+
+        const payload = {
+          data: args.data,
+          dataHash: args.dataHash,
+          signatures: parseArray(args.signatures),
+          metadata: {
+            contentType: args.metadataContentType,
+            encoding: args.metadataEncoding,
+            compression: args.metadataCompression,
+          }
+        }
+
+        const params = {
+          agent: args.agent,
+          digest: args.configDigest,
+          payload: payload as any,
+        }
+
+        try {
+          logger("Verifying data with payload: " + JSON.stringify(params));
+
+          const tx = await this.agentSDK.verify(params as any);
+          logger("Verified data with tx hash: " + tx.hash);
+
+          await tx.wait()
+          return new ExecutableGameFunctionResponse(
+            ExecutableGameFunctionStatus.Done,
+            "Verified data with tx hash: " + tx.hash
+          );
+        } catch (e) {
+          return new ExecutableGameFunctionResponse(
+            ExecutableGameFunctionStatus.Failed,
+            "Failed to verify data: " + e
+          );
+        }
       }
     })
   }
@@ -263,7 +321,7 @@ class AproPlugin {
         } catch (e) {
           return new ExecutableGameFunctionResponse(
             ExecutableGameFunctionStatus.Failed,
-            "Failed to fetch price data"
+            "Failed to fetch price data, error: " + e
           );
         }
       }
