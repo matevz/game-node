@@ -175,34 +175,6 @@ class AproPlugin {
     return new GameFunction({
       name: "verify_data",
       description: "Verify data in the Apro Platform.",
-      /**
-       const payload: MessagePayload = {
-      data: fullReport,
-      dataHash: '0x' + keccak256(fullReport),
-      signatures: [
-        {
-          r: '097dda4dd6f7113a710c9b5b56ce458c0791469bb5de01a71a5413ff43eb8b2a',
-          s: '6249bbc444f934de2707d20502de7439be8c077d34dd196cfe19bb6e5e251a3a',
-          v: 1, // or 28
-        },
-        {
-          r: '2e2d7e199e08106cf2a6308a7af2e339b11bf87bfa4a5593f6f4282396360a9d',
-          s: '27a333dafc80196d062406cae35c7ff5225f7fbc97c48a178fa1190e87d096db',
-          v: 0, // or 27
-        },
-        {
-          r: '7a4eff209893782d721486177d6b667658d386f790eb64346c25d12251316b43',
-          s: '146827e5d0f00b890772178971db330e8357282b196db806b8a5042de7de12d2',
-          v: 1, // or 28
-        },
-      ],
-      metadata: {
-        contentType: 'application/abi',
-        encoding: 'null',
-        compression: 'null',
-      },
-    }
-       */
       args: [
         {
           name: "agent",
