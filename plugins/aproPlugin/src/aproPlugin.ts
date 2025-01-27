@@ -161,10 +161,10 @@ class AproPlugin {
             ExecutableGameFunctionStatus.Done,
             "Created and registered agent with address: " + agentAddress
           );
-        } catch (e) {
+        } catch (e: any) {
           return new ExecutableGameFunctionResponse(
             ExecutableGameFunctionStatus.Failed,
-            "Failed to create and register agent: " + e
+            "Failed to create and register agent: " + e.message
           );
         }
       }
@@ -248,10 +248,10 @@ class AproPlugin {
             ExecutableGameFunctionStatus.Done,
             "Verified data with tx hash: " + tx.hash
           );
-        } catch (e) {
+        } catch (e: any) {
           return new ExecutableGameFunctionResponse(
             ExecutableGameFunctionStatus.Failed,
-            "Failed to verify data: " + e
+            "Failed to verify data: " + e.message
           );
         }
       }
@@ -290,10 +290,10 @@ class AproPlugin {
             ExecutableGameFunctionStatus.Done,
             `Fetched price data: \nAsk price: ${cleanNumber(priceData.askPrice)}\nBid price: ${cleanNumber(priceData.bidPrice)}\nMid price: ${cleanNumber(priceData.midPrice)}\nTimestamp: ${priceData.validTimeStamp}`
           );
-        } catch (e) {
+        } catch (e: any) {
           return new ExecutableGameFunctionResponse(
             ExecutableGameFunctionStatus.Failed,
-            "Failed to fetch price data, error: " + e
+            "Failed to fetch price data, error: " + e.message
           );
         }
       }
