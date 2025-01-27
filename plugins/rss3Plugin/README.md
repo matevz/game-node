@@ -75,6 +75,14 @@ The `RSS3Plugin` provides 2 functions that can be used by the agent:
 
 - `getCryptoNewsFunction`: Retrieve the latest crypto news structured for AI agents to be used as a source of information for analysis and decision-making.
 - `getActivitiesFunction`: Retrieve activities of anyone based on a query.
+  - This function accepts a list of parameters:
+    - `account`: Required, the address of the user whose activities you want to retrieve.
+    - `tag`: Optional, the tag of activities to retrieve.
+    - `type`: Optional, the type of the activities to retrieve.
+    - `netwrk`: Optional, the network to retrieve activities from.
+    - `platform`: Optional, the platform to retrieve activities from.
+    - `limit`: Optional, the number of activities to retrieve.
+  - For more information on the parameters, refer to the [RSS3 documentation](https://docs.rss3.io/) or [OpenAPI](https://petstore.swagger.io/?url=https://gi.rss3.io/docs/openapi.json#/DSL/getAccountActivities).
 
 ## License
 
