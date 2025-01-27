@@ -3,12 +3,12 @@
 The [Allora Network](https://allora.network) plugin seamlessly empowers G.A.M.E agents with real-time, advanced, self-improving AI inferences, delivering high-performance insights without introducing any additional complexity.
 
 ### Features
-- Get price predictions for various assets and timeframes
+- Get price inferences for various assets and timeframes
 - Get all available topics on Allora Network
 - Fetch inferences by topic ID
 
 ### Available Functions
-1. `getPricePrediction`: Fetches the price prediction for the specified asset and a timeframe
+1. `getPriceInference`: Fetches the price inference for the specified asset and a timeframe
 2. `getAllTopics`: Retrieves all available topics on Allora Network
 3. `getInferenceByTopicId`: Fetches the latest inference for a specific topic
 
@@ -66,7 +66,7 @@ import { GameAgent } from "@virtuals-protocol/game";
 const agent = new GameAgent("GAME_API_KEY", {
   name: "Allora Worker",
   goal: "Retrieve the price of ETH in 5 minutes.",
-  description: "You are an AI agent able to fetch price predictions and topic inferences from Allora Network.",
+  description: "You are an AI agent able to fetch price inferences and topic inferences from Allora Network.",
   workers: [alloraPlugin.getWorker({})],
 });
 ```
