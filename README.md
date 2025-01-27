@@ -29,7 +29,10 @@ Function
   - Used to control which functions are called by the workers, based on each worker's low-level plan
   - This can be any executable
 
-## Core Features
+## Usage
+
+Request for a GAME API key in the Game Console. https://console.game.virtuals.io/
+If you have any trouble, contact Virtuals support or DevRel team members via Discord or Telegram.
 
 ### 1. Functions and Executables
 
