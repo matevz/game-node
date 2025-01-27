@@ -10,9 +10,6 @@ npm install @virtuals-protocol/game
 
 Currently, this SDK allows you to develop your agents powered by the GAME architecture in its most fullest and most flexible form.
 
-Request for a GAME API key in the Game Console. https://console.game.virtuals.io/
-If you have any trouble, contact Virtuals support or DevRel team members via Discord or Telegram.
-
 ![New SDK visual](docs/imgs/new_sdk_visual.png)
 The SDK is made up of 3 main components (Agent, Worker, function), each with configurable arguments.
 
@@ -32,7 +29,10 @@ Function
   - Used to control which functions are called by the workers, based on each worker's low-level plan
   - This can be any executable
 
-## Core Features
+## Usage
+
+Request for a GAME API key in the Game Console. https://console.game.virtuals.io/
+If you have any trouble, contact Virtuals support or DevRel team members via Discord or Telegram.
 
 ### 1. Functions and Executables
 
