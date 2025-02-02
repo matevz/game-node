@@ -1,42 +1,39 @@
-# Twitter Plugin for Virtuals Game
+# Farcaster Plugin for Virtuals Game
 
-This plugin allows you to integrate Twitter functionalities into your Virtuals Game. With this plugin, you can post tweets, reply to tweets, like tweets, and more.
+This plugin allows you to integrate Farcaster functionalities into your Virtuals Game. With this plugin, you can post casts on the Farcaster network.
 
 ## Installation
 
 To install the plugin, use npm or yarn:
 
 ```bash
-npm install @virtuals-protocol/game-twitter-plugin
+npm install @virtuals-protocol/game-farcaster-plugin
 ```
 
 or
 
 ```bash
-yarn add @virtuals-protocol/game-twitter-plugin
+yarn add @virtuals-protocol/game-farcaster-plugin
 ```
 
 ## Usage
 
 ### Importing the Plugin
 
-First, import the `TwitterPlugin` class from the plugin:
+First, import the `FarcasterPlugin` class from the plugin:
 
 ```typescript
-import TwitterPlugin from "@virtuals-protocol/game-twitter-plugin";
+import FarcasterPlugin from "@virtuals-protocol/game-farcaster-plugin";
 ```
 
 ### Creating a Worker
 
-Create a worker with the necessary Twitter credentials:
+Create a worker with the necessary Farcaster credentials:
 
 ```typescript
-const twitterPlugin = new TwitterPlugin({
+const farcasterPlugin = new FarcasterPlugin({
   credentials: {
-    apiKey: "your_api_key",
-    apiSecretKey: "your_api_secret_key",
-    accessToken: "your_access_token",
-    accessTokenSecret: "your_access_token_secret",
+    neynarApiKey: "your_neynar_api_key"
   },
 });
 ```
@@ -49,10 +46,10 @@ Create an agent and add the worker to it:
 import { GameAgent } from "@virtuals-protocol/game";
 
 const agent = new GameAgent("API_KEY", {
-  name: "Twitter Bot",
-  goal: "Increase engagement and grow follower count",
-  description: "A bot that can post tweets, reply to tweets, and like tweets",
-  workers: [twitterPlugin.getWorker()],
+  name: "Farcaster Bot",
+  goal: "Engage with the Farcaster community",
+  description: "A bot that can post casts on Farcaster",
+  workers: [farcasterPlugin.getWorker()],
 });
 ```
 
@@ -74,13 +71,11 @@ Initialize and run the agent:
 
 ## Available Functions
 
-The `TwitterPlugin` provides several functions that can be used by the agent:
+The `FarcasterPlugin` currently provides the following function:
 
-- `searchTweetsFunction`: Search for tweets based on a query.
-- `replyTweetFunction`: Reply to a tweet.
-- `postTweetFunction`: Post a new tweet.
-- `likeTweetFunction`: Like a tweet.
-- `quoteTweetFunction`: Quote a tweet with your own commentary.
+- `postCastFunction`: Post a new cast to Farcaster. Takes two arguments:
+  - `text`: The content of the cast
+  - `cast_reasoning`: The reasoning behind the cast
 
 ## License
 
