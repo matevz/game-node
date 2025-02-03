@@ -1,6 +1,7 @@
 import { GameAgent } from "@virtuals-protocol/game";
 import AproPlugin from "../src";
 import { describe, it } from "vitest";
+import { randomUUID } from "node:crypto";
 
 describe("AproPlugin", async () => {
   const aproPlugin = new AproPlugin({
@@ -63,6 +64,39 @@ describe("AproPlugin", async () => {
         ttl: 3600,
       },
     }`
+
+    // When
+    await agentWorker.runTask(task, {verbose: true});
+  })
+
+  it('should create an agent with full settings', async () => {
+    // Given
+    const messageId = randomUUID();
+    const sourceAgentId = randomUUID();
+
+    const task = `create an agent with the following data
+    {
+      signers: [
+        '0x003CD3bD8Ac5b045be8E49d4dfd9928E1765E471',
+        '0xdE3701195b9823E41b3fc2c98922A94399E2a01C',
+        '0xB54E5D4faa950e8B6a01ed5a790Ac260c81Ad224',
+        '0x48eE063a6c67144E09684ac8AD9a0044836f348B',
+        '0xbBbCc052F1277dd94e88e8E5BD6D7FF9a29BaC98'
+      ],
+      threshold: 3,
+      converterAddress: "0x24c36e9996eb84138Ed7cAa483B4c59FF7640E5C",
+      agentHeader: {
+        sourceAgentId: ${sourceAgentId},
+        messageId: ${messageId},
+        sourceAgentName: 'Game Test Agent',
+        targetAgentId: '1105302c-7556-49b2-b6fe-3aedba9c0682',
+        messageType: 0,
+        priority: 1,
+        ttl: 3600,
+      },
+    }`
+
+    console.log("Trying to create agent with message id: " + messageId + " and source agent id: " + sourceAgentId);
 
     // When
     await agentWorker.runTask(task, {verbose: true});

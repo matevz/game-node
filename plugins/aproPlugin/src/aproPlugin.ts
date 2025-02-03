@@ -105,6 +105,18 @@ class AproPlugin {
           description: "The converter address of the agent.",
         },
         {
+          name: "agentHeaderSourceAgentId",
+          type: "string",
+          optional: true,
+          description: "The source agent id of the agent header.",
+        },
+        {
+          name: "agentHeaderMessageId",
+          type: "string",
+          optional: true,
+          description: "The message id of the agent header.",
+        },
+        {
           name: "agentHeaderSourceAgentName",
           type: "string",
           description: "The source agent name of the agent header.",
@@ -134,6 +146,8 @@ class AproPlugin {
         logger("Creating and registering agent with args: \n" + JSON.stringify(args));
 
         const agentHeader = {
+          sourceAgentId: args.agentHeaderSourceAgentId,
+          messageId: args.agentHeaderMessageId,
           sourceAgentName: args.agentHeaderSourceAgentName,
           targetAgentId: args.agentHeaderTargetAgentId,
           messageType: Number(args.agentHeaderMessageType),
