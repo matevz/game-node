@@ -1,3 +1,3 @@
-import AproPlugin from "./aproPlugin";
+import AttpsPlugin from "./attpsPlugin";
 
-export default AproPlugin;
+export default AttpsPlugin;

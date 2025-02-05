@@ -1,10 +1,10 @@
 import { GameAgent } from "@virtuals-protocol/game";
-import AproPlugin from "../src";
+import AttpsPlugin from "../src";
 import { describe, it } from "vitest";
 import { randomUUID } from "node:crypto";
 
-describe("AproPlugin", async () => {
-  const aproPlugin = new AproPlugin({
+describe("AttpsPlugin", async () => {
+  const attpsPlugin = new AttpsPlugin({
     credentials: {
       proxyAddress: process.env.PROXY_ADDRESS!,
       privateKey: process.env.PRIVATE_KEY!,
@@ -13,11 +13,11 @@ describe("AproPlugin", async () => {
   });
 
   const agent = new GameAgent(process.env.AGENT_API_KEY!, {
-    name: "Apro Bot",
+    name: "ATTPs Bot",
     goal: `You are a bot that can create agents, verify data, and query price data.`,
     description: "A bot that can create agents, verify data, and query price data",
     workers: [
-      aproPlugin.getWorker({}),
+      attpsPlugin.getWorker({}),
     ],
   });
 
@@ -28,7 +28,7 @@ describe("AproPlugin", async () => {
   });
 
   await agent.init();
-  const agentWorker = agent.getWorkerById('apro_worker')
+  const agentWorker = agent.getWorkerById('attps_worker')
 
   it('should fetch price data', async () => {
     // Given

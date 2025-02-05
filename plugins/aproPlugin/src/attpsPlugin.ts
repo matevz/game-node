@@ -7,7 +7,7 @@ import {
 import { AgentSDK, parseNewAgentAddress } from "ai-agent-sdk-js";
 import { AttpsPriceQueryResponse } from "./types";
 
-interface IAproPluginOptions {
+interface IAttpsPluginOptions {
   id?: string;
   name?: string;
   description?: string;
@@ -45,18 +45,18 @@ function parseArray(array?: any) {
   return JSON.parse(array.replace(/'/g, '"').trim());
 } 
 
-class AproPlugin {
+class AttpsPlugin {
   private id: string;
   private name: string;
   private description: string;
   private agentSDK: AgentSDK
 
-  constructor(options: IAproPluginOptions) {
-    this.id = options.id || "apro_worker";
-    this.name = options.name || "Apro Worker";
+  constructor(options: IAttpsPluginOptions) {
+    this.id = options.id || "attps_worker";
+    this.name = options.name || "ATTPs Worker";
     this.description =
       options.description ||
-      "A worker that will execute tasks within the Apro Platforms. It is capable of creating agents, verifying data, and more.";
+      "A worker that will execute tasks within the ATTPs Platforms. It is capable of creating agents, verifying data, and more.";
 
     this.agentSDK = new AgentSDK({
       rpcUrl: options.credentials.rpcUrl,
@@ -87,7 +87,7 @@ class AproPlugin {
   get createAndRegisterAgentFunction() {
     return new GameFunction({
       name: "create_and_register_agent",
-      description: "Create and register an agent in the Apro Platform.",
+      description: "Create and register an agent in the ATTPs Platform.",
       args: [
         {
           name: "signers",
@@ -188,7 +188,7 @@ class AproPlugin {
   get verifyDataFunction() {
     return new GameFunction({
       name: "verify_data",
-      description: "Verify data in the Apro Platform.",
+      description: "Verify data in the ATTPs Platform.",
       args: [
         {
           name: "agent",
@@ -275,7 +275,7 @@ class AproPlugin {
   get attpsPriceQueryFunction() {
     return new GameFunction({
       name: "price_query",
-      description: "Query the price of a service in the Apro Platform.",
+      description: "Query the price of a service in the ATTPs Platform.",
       args: [
         {
           name: "sourceAgentId",
@@ -315,4 +315,4 @@ class AproPlugin {
   }
 }
 
-export default AproPlugin;
+export default AttpsPlugin;
