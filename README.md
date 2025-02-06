@@ -25,7 +25,7 @@ Go into the folder's readme for instructions are on how to get started.
 ## Examples
 In the `examples` folder, there are two self contained examples: a twitter agent and a telegram agent. 
 
-Just compile and run! (make sure you have an API key first!)
+Just compile with `npm run build` and `npm start` to run! (make sure you have an API key first!)
 
 ## Plugins
 In the `plugins` folder are various plugins that can give your agent more functionality. 
@@ -37,21 +37,21 @@ Plugins are always open source and we welcome contributions!
 
 ## Components and Architecture Overview
 
-At a high level, this SDK allows you to develop your agents powered by the GAME architecture in its most full and flexible form. The SDK is made up of 3 main components (Agent, Worker, function), each with configurable arguments. Our whitepaper expands in greater depth [Virtuals Game Framework Whitepaper](https://whitepaper.virtuals.io/developer-documents/game-framework).
+At a high level, this SDK allows you to develop your agents powered by the GAME architecture in its most full and flexible form. The SDK is made up of 3 main components (Agent, Worker, function), each with configurable arguments. Our docs expands in greater depth [G.A.M.E Docs](https://docs.game.virtuals.io/game-sdk).
 
 
 
 ![New SDK visual](docs/imgs/new_sdk_visual.png)
 
 
-Agent (a.k.a. [high level planner](https://whitepaper.virtuals.io/developer-documents/game-framework/game-overview#high-level-planner-hlp-context))
+Agent (a.k.a. [high level planner](https://docs.game.virtuals.io/game-cloud#high-level-planner-context))
 - Takes in a <b>Goal</b>
   - Drives the agent's behavior through the high-level plan which influences the thinking and creation of tasks that would contribute towards this goal
 - Takes in a <b>Description</b>
   - Combination of what was previously known as World Info + Agent Description
   - This includes a description of the "world" the agent lives in, and the personality and background of the agent
 
-Worker (a.k.a. [low-level planner](https://whitepaper.virtuals.io/developer-documents/game-framework/game-overview#low-level-planner-llp-context)) 
+Worker (a.k.a. [low-level planner](https://docs.game.virtuals.io/game-cloud#low-level-planner-context)) 
 - Takes in a <b>Description</b>
   - Used to control which workers are called by the agent, based on the high-level plan and tasks created to contribute to the goal
 
