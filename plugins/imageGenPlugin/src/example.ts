@@ -1,3 +1,6 @@
+import { config } from 'dotenv';
+config({ path: './.env' });
+
 import { GameAgent } from "@virtuals-protocol/game";
 import ImageGenPlugin from ".";
 

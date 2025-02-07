@@ -123,11 +123,7 @@ class ImageGenPlugin {
 
           return new ExecutableGameFunctionResponse(
             ExecutableGameFunctionStatus.Done,
-            message,
-            {
-              prompt: args.prompt,
-              image_url: imageUrl,
-            }
+            message
           );
         } catch (e: any) {
           const errorMessage = `An error occurred while generating image: ${e.message || "Unknown error"}`;
@@ -135,10 +131,7 @@ class ImageGenPlugin {
           
           return new ExecutableGameFunctionResponse(
             ExecutableGameFunctionStatus.Failed,
-            errorMessage,
-            {
-              prompt: args.prompt,
-            }
+            errorMessage
           );
         }
       },
