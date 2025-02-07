@@ -1,18 +1,32 @@
 import { GameAgent } from "@virtuals-protocol/game";
-import TwitterPlugin from "@virtuals-protocol/game-twitter-plugin";
+import TwitterPlugin, {
+  GameTwitterClient,
+  TwitterClient,
+} from "@virtuals-protocol/game-twitter-plugin";
+
+const gameTwitterClient = new GameTwitterClient({
+  accessToken: "xxxxxxxxxx",
+});
+
+const nativeTwitterClient = new TwitterClient({
+  apiKey: "xxxxxxx",
+  apiSecretKey: "xxxxxxx",
+  accessToken: "xxxxxxx",
+  accessTokenSecret: "xxxxxxxxx",
+});
 
 // Create a worker with the functions
 const twitterPlugin = new TwitterPlugin({
-  credentials: {
-    apiKey: "xxxxxxx",
-    apiSecretKey: "xxxxxxx",
-    accessToken: "xxxxxxx",
-    accessTokenSecret: "xxxxxxxxx",
-  },
+  id: "twitter_worker",
+  name: "Twitter Worker",
+  description:
+    "A worker that will execute tasks within the Twitter Social Platforms. It is capable of posting, reply, quote and like tweets.",
+  // twitterClient: nativeTwitterClient,
+  twitterClient: gameTwitterClient, // Use this if you want to use the game client
 });
 
 // Create an agent with the worker
-const agent = new GameAgent("API_KEY", {
+const agent = new GameAgent("<GAME_API_KEY>", {
   name: "Twitter Bot",
   goal: "increase engagement and grow follower count",
   description: "A bot that can post tweets, reply to tweets, and like tweets",

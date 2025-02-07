@@ -26,18 +26,70 @@ First, import the `TwitterPlugin` class from the plugin:
 import TwitterPlugin from "@virtuals-protocol/game-twitter-plugin";
 ```
 
+### Selection a twitter plugin
+
+### Selecting a Twitter Plugin
+
+There are two options for selecting a Twitter plugin based on your needs:
+
+1. **Game Twitter Client**: This client is designed specifically for integration with the Virtuals Game environment. It provides seamless interaction with the game and allows for enhanced functionalities tailored to game-specific requirements.
+
+```typescript
+import { GameTwitterClient } from "@virtuals-protocol/game-twitter-plugin";
+
+const gameTwitterClient = new GameTwitterClient({
+  accessToken: "your_game_access_token",
+});
+```
+
+To get the access token, run the following command:
+
+```bash
+npx @virtuals-protocol/game-twitter-plugin auth -k <GAME_API_KEY>
+```
+
+Here is an example run:
+
+```bash
+npx @virtuals-protocol/game-twitter-plugin auth -k apt-xxxxxxxxxx
+```
+
+You will see the following output:
+
+```
+Waiting for authentication...
+
+Visit the following URL to authenticate:
+https://x.com/i/oauth2/authorize?response_type=code&client_id=VVdyZ0t4WFFRMjBlMzVaczZyMzU6MTpjaQ&redirect_uri=http%3A%2F%2Flocalhost%3A8714%2Fcallback&state=866c82c0-e3f6-444e-a2de-e58bcc95f08b&code_challenge=K47t-0Mcl8B99ufyqmwJYZFB56fiXiZf7f3euQ4H2_0&code_challenge_method=s256&scope=tweet.read%20tweet.write%20users.read%20offline.access
+```
+
+After authenticating, you will receive the following message:
+
+```
+Authenticated! Here's your access token:
+apx-613f64069424d88c6fbf2e75c0c80a34
+```
+
+2. **Native Twitter Client**: This client is a more general-purpose Twitter client that can be used outside of the game context. It provides standard Twitter functionalities and can be used in various applications.
+
+```typescript
+import { TwitterClient } from "@virtuals-protocol/game-twitter-plugin";
+
+const nativeTwitterClient = new TwitterClient({
+  apiKey: "your_api_key",
+  apiSecretKey: "your_api_secret_key",
+  accessToken: "your_access_token",
+  accessTokenSecret: "your_access_token_secret",
+});
+```
+
 ### Creating a Worker
 
 Create a worker with the necessary Twitter credentials:
 
 ```typescript
 const twitterPlugin = new TwitterPlugin({
-  credentials: {
-    apiKey: "your_api_key",
-    apiSecretKey: "your_api_secret_key",
-    accessToken: "your_access_token",
-    accessTokenSecret: "your_access_token_secret",
-  },
+  twitterClient: gameTwitterClient || nativeTwitterClient, // choose either 1 client
 });
 ```
 
