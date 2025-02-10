@@ -4,7 +4,7 @@ import {
   ExecutableGameFunctionResponse,
   ExecutableGameFunctionStatus,
 } from "@virtuals-protocol/game";
-import { AgentKit, FarcasterActionProvider } from "@coinbase/agentkit";
+import { FarcasterActionProvider } from "@coinbase/agentkit";
 
 interface IFarcasterPluginOptions {
   id?: string;
@@ -12,6 +12,8 @@ interface IFarcasterPluginOptions {
   description?: string;
   credentials: {
     neynarApiKey: string;
+    neynarSignerUuid: string;
+    neynarAgentFid: string;
   };
 }
 
@@ -27,7 +29,7 @@ class FarcasterPlugin {
     this.description =
       options.description ||
       "A worker that will execute tasks within the Farcaster Social Platform. It is capable of posting, replying, recasting and liking casts.";
-      this.farcastActionProvider = new FarcasterActionProvider({neynarApiKey: options.credentials.neynarApiKey});
+      this.farcastActionProvider = new FarcasterActionProvider({neynarApiKey: options.credentials.neynarApiKey, signerUuid: options.credentials.neynarSignerUuid, agentFid: options.credentials.neynarAgentFid});
   }
 
   public getWorker(data?: {
