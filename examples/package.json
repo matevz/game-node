@@ -1,5 +1,5 @@
 {
-  "name": "game-examples",
+  "name": "examples",
   "private": true,
   "dependencies": {
     "@virtuals-protocol/game": "^0.1.7",
