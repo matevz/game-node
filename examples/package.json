@@ -10,7 +10,6 @@
   "scripts": {
     "start": "ts-node -P ./tsconfig.json",
     "build": "tsc -p ./tsconfig.json",
-    "activity-recommender": "ts-node activity-recommender/index.ts",
     "twitter-example": "ts-node twitter-example/twitter.ts",
     "telegram-example": "ts-node telegram-example/tg.ts"
   }
