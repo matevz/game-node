@@ -38,6 +38,14 @@ export interface GameAction {
   agent_state?: Record<string, any>;
 }
 
+export enum LLMModel {
+  Llama_3_1_405B_Instruct = "Llama-3.1-405B-Instruct",
+  Llama_3_3_70B_Instruct = "Llama-3.3-70B-Instruct",
+  DeepSeek_R1 = "DeepSeek-R1",
+  DeepSeek_V3 = "DeepSeek-V3",
+  Qwen_2_5_72B_Instruct = "Qwen-2.5-72B-Instruct",
+}
+
 export interface IGameClient {
   client: Axios | null;
   createMap(workers: GameWorker[]): Promise<Map>;
