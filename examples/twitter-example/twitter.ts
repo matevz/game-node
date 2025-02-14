@@ -4,6 +4,7 @@ import {
   GameAgent,
   GameFunction,
   GameWorker,
+  LLMModel,
 } from "@virtuals-protocol/game";
 import dotenv from 'dotenv';
 import path from 'path';
@@ -113,6 +114,7 @@ const agent = new GameAgent(process.env.API_KEY!, {
   goal: "Search and reply to tweets",
   description: "A bot that searches for tweets and replies to them",
   workers: [postTweetWorker],
+  llmModel: LLMModel.DeepSeek_R1, // Optional: Set the LLM model default (LLMModel.Llama_3_1_405B_Instruct)
   // Optional: Get the agent state
   getAgentState: async () => {
     return {
