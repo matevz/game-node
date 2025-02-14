@@ -67,8 +67,7 @@ const actionSpace: Function[] = [
 ];
 
 // Environment check
-const apiKey =
-  process.env.GAME_API_KEY || "apt-5eff243f2901424b51ab5f2726890758";
+const apiKey = process.env.GAME_API_KEY;
 if (!apiKey) {
   throw new Error("GAME_API_KEY is not set");
 }
