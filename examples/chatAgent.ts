@@ -1,4 +1,8 @@
-import { ChatAgent, Function, FunctionResultStatus } from "../src/chatAgent";
+import {
+  ChatAgent,
+  Function,
+  FunctionResultStatus,
+} from "@virtuals-protocol/game";
 
 type FunctionResult = [FunctionResultStatus, string, Record<string, any>];
 
