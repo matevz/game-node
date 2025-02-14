@@ -83,8 +83,6 @@ const main = async () => {
   let chatContinue = true;
 
   while (chatContinue) {
-    // Note: In a real implementation, you'd want to use a proper input method
-    // This is just a placeholder as Node.js doesn't have a direct equivalent to Python's input()
     const userMessage = await getUserInput("Enter a message: ");
 
     const response = await chat.next(userMessage);
@@ -106,7 +104,6 @@ const main = async () => {
   console.log("Chat ended");
 };
 
-// Helper function for getting user input (you'll need to implement this)
 const getUserInput = async (prompt: string): Promise<string> => {
   const readline = (await import("readline")).default.createInterface({
     input: process.stdin,
