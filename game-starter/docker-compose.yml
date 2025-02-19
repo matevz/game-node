@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   game-starter:
     image: virtuals-game-starter
@@ -9,7 +7,9 @@ services:
     platform: linux/amd64
     environment:
       - API_KEY=
+      - WEATHER_API_KEY=
       - OPENAI_API_KEY=
+      - OPENAI_BASE_URL=
       - botToken=
     volumes:
       - /var/run/tappd.sock:/var/run/tappd.sock
