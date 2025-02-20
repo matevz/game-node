@@ -204,7 +204,7 @@ export interface TweetBase {
 }
 
 /**
- * A tweet as returned by the the Twitter syndication API.
+ * A tweet as returned by the Twitter syndication API.
  */
 export interface Tweet extends TweetBase {
   __typename: 'Tweet'
