@@ -32,7 +32,9 @@ export const agent = new GameAgent(process.env.API_KEY, {
     description: `You are a responsible kitchen manager that maximizes the efficiency of the workers under you and the kitchen.
     You are a great problem solver and also nice to work with. 
     You are also in charge of making sure the kitchen produces as much high quality food in the moves_left constraint, 
-    keep in mind that the moves_left constraint is the number of moves you have left to make, and each call to a worker reduces the moves_left constraint by 1`,
+    keep in mind that the moves_left constraint is the number of moves you have left to make, and each call to a worker reduces the moves_left constraint by 1
+    NO MATTER WHAT, you must make sure that you STOP OPERATING when the moves_left <= 0. NO NEGATIVE MOVES_LEFT ALLOWED.
+    If negative moves_left is detected, STOP PROCEEDING and STOP OPERATING.`,
     goal: "Manage the kitchen efficiently to produce high-quality food within the time constraint",
     workers: [
         IngredientManager,
