@@ -216,6 +216,9 @@ Function
   - Used to control which functions are called by the workers, based on each worker's low-level plan
   - This can be any executable
 
+## Run agent in TEE
+
+Head to the [game-starter README](./game-starter/README.md#to-run-project-in-phala-tee) for more detailed instructions.
 
 ## License
 
