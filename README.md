@@ -218,7 +218,7 @@ Function
 
 ## Run agent in TEE
 
- Head to the [game-starter README](./game-starter/README.md#to-run-project-in-phala-tee) for instructions for more details.
+Head to the [game-starter README](./game-starter/README.md#to-run-project-in-phala-tee) for more detailed instructions.
 
 ## License
 
