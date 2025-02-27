@@ -4,7 +4,7 @@ dotenv.config({ path: __dirname + '/.env' });
 
 import { HeadChef, IngredientManager } from "./worker"
 
-let moves = 10;
+let moves =3;
 const getAgentState = async () => {
     return {
         moves_left: moves
