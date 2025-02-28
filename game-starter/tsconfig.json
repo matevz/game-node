@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "rootDir": ".",
+    "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
     "esModuleInterop": true,
@@ -11,8 +11,7 @@
     "forceConsistentCasingInFileNames": true,
   },
   "include": [
-    "src/**/*",
-    "examples/**/*"
+    "src/**/*"
   ],
   "exclude": [
     "node_modules"
