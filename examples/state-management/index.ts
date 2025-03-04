@@ -6,11 +6,6 @@ async function main() {
     try {
         // Initialize the agent
         await agent.init();
-        
-        // Run the agent for 30 seconds
-        // setTimeout(() => {
-        //     process.exit(0);
-        // }, 30000);
 
         // Run the agent
         while (true) {

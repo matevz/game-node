@@ -45,9 +45,9 @@ export const buyIngredient = new GameFunction({
     name: "buy_ingredient",
     description: "Buy the ingredient",
     args: [
-        {name: "currentBudget", description: "The current budget of the kitchen"},
-        {name: "ingredient", description: "The ingredient to buy"},
-        {name: "price", description: "The price of the ingredient"} 
+        { name: "currentBudget", description: "The current budget of the kitchen" },
+        { name: "ingredient", description: "The ingredient to buy" },
+        { name: "price", description: "The price of the ingredient" }
     ] as const,
     executable: async (args, logger) => {
         setAgentState({
@@ -68,15 +68,6 @@ export const buyIngredient = new GameFunction({
     }
 })
 
-// export const updateInventory = new GameFunction({
-//     name: "update_inventory",
-//     description: "Update the inventory",
-//     args: [] as const,
-//     executable: async (args, logger) => {
-//         return new ExecutableGameFunctionResponse
-//     }
-// })
-
 export const getBudget = new GameFunction({
     name: "get_budget",
     description: "Get the budget",
@@ -85,6 +76,43 @@ export const getBudget = new GameFunction({
         return new ExecutableGameFunctionResponse(
             ExecutableGameFunctionStatus.Done,
             JSON.stringify(restaurantBudget)
+        )
+    }
+})
+
+export const getIngredientPrices = new GameFunction({
+    name: "get_ingredient_prices",
+    description: "Get the prices of the ingredients",
+    args: [] as const,
+    hint: "use this to get the prices of the ingredients",
+    executable: async (args, logger) => {
+        return new ExecutableGameFunctionResponse(
+            ExecutableGameFunctionStatus.Done,
+            JSON.stringify(ingredientPrices)
+        )
+    }
+})
+
+export const getMovesLeft = new GameFunction({
+    name: "get_moves_left",
+    description: "Get the moves left",
+    args: [] as const,
+    executable: async (args, logger) => {
+        return new ExecutableGameFunctionResponse(
+            ExecutableGameFunctionStatus.Done,
+            JSON.stringify(getMoves())
+        )
+    }
+})
+
+export const doNothing = new GameFunction({
+    name: "do_nothing",
+    description: "Do nothing",
+    args: [] as const,
+    executable: async (args, logger) => {
+        return new ExecutableGameFunctionResponse(
+            ExecutableGameFunctionStatus.Done,
+            "do nothing"
         )
     }
 })
