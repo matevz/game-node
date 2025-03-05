@@ -39,6 +39,8 @@ yarn add @virtuals-protocol/game-enso-plugin
 
 1. Make sure the .env variables are set
 
+Get your Enso API key [here](https://shortcuts.enso.finance/developers)
+
 ```
 WALLET_PRIVATE_KEY=
 RPC_PROVIDER_URL=
