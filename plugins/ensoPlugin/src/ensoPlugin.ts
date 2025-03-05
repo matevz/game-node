@@ -176,6 +176,8 @@ function ensoRoute(params: IEnsoFunctionParams) {
           account: params.wallet.account,
           data: routeData.tx.data as Address,
           to: routeData.tx.to,
+          // Increase gas from Enso API by 50% (to prevent out-of-gas errors)
+          gas: (BigInt(routeData.gas) * BigInt(15)) / BigInt(10),
           value: BigInt(routeData.tx.value),
         });
 
